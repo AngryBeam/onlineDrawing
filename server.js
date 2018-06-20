@@ -26,7 +26,7 @@ io.sockets.on('connection', function (socket) {
 	// Listen for mouse move events
 	console.log('New Connection');
 	socket.on('mousemove', function (data) {
-		console.log(data);
+		//console.log(data);
 		replayData.push(data);
 		socket.broadcast.emit('moving', data); // Broadcasts event to everyone except originating client
 	});
