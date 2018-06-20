@@ -32,7 +32,7 @@ $(function(){
     // Keep users screen up to date with other users cursors & lines
    function rePlay(data) {
         console.log('Render Replay');
-        console.log(data);
+        //console.log(data);
         // Create cursor
         if ( !(data.id in clients) )
         {
@@ -67,10 +67,27 @@ $(function(){
     socket.on('replay', function (data) {
         console.log('Replay data received.');
         console.log(data);
-
-        data.forEach(element => {
+   
+        /* data.forEach(element => {
             //setInterval(rePlay(element), 2000);
-            setTimeout(rePlay(element), 8000);
+    
+            rePlay(element);
+           
         });
+ */
+        //var data = [1,2,3,4,5];
+
+        (function theLoop (data, i) {
+            setTimeout(function () {
+            rePlay(data[i]);
+            --i;
+            if (i >= 0) {          // If i > 0, keep going
+                theLoop(data,i);       // Call the loop again, and pass it the current value of i
+            }
+            }, 100);
+        })(data.reverse(), data.length-1);
+
+        
+
     });
 });

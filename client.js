@@ -38,6 +38,13 @@ $(function(){
     
     // On mouse down
     canvas.on('mousedown', function(e) {
+        socket.emit('beforemousemove', {
+            'x': e.pageX,
+            'y': e.pageY,
+            'touch': false,
+            'drawing': drawing,
+            'id': id
+        });
         e.preventDefault();
         drawing = true;
         prev.x = e.pageX;
