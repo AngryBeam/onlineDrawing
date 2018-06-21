@@ -84,7 +84,7 @@ $(function(){
             if (i >= 0) {          // If i > 0, keep going
                 theLoop(data,i);       // Call the loop again, and pass it the current value of i
             }
-            }, 100);
+            }, 70);
         })(data.reverse(), data.length-1);
 
         

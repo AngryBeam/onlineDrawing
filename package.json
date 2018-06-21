@@ -4,7 +4,9 @@
   "description": "Node-Draw =========",
   "main": "client.js",
   "dependencies": {
+    "async": "^2.6.1",
     "node-static": "^0.7.10",
+    "nodemon": "^1.17.5",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {},
@@ -12,7 +14,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-
   "keywords": [],
   "author": "",
   "license": "ISC",

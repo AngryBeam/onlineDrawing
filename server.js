@@ -24,7 +24,7 @@ var replayData = [];
 // Listen for incoming connections from clients
 io.sockets.on('connection', function (socket) {
 	// Listen for mouse move events
-	console.log('New Connection');
+	console.log('New Connection for id ' + socket.id);
 	socket.on('mousemove', function (data) {
 		
 		if(data.drawing){
@@ -42,5 +42,7 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('replay', replayData);
 		replayData = [];
 	})
-
+	socket.on('disconnect', () => {
+		console.log('Disconnected for id ' + socket.id);
+	});
 });
