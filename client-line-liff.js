@@ -5,9 +5,9 @@ window.onload = function (e) {
         isLineUser = true;
     });
 };
-var userData;
+var userData = array;
 function initializeApp(data) {
-    userData = data;
+    userData.push(data);
     let profile = liff.getProfile().then(function (profile) {
         userData.push(profile);
     }).catch(function (error) {
