@@ -119,7 +119,8 @@ function initializeApp(data) {
             'y': e.pageY,
             'touch': false,
             'drawing': drawing,
-            'id': id
+            'id': id,
+            'userData': userData
         });
         e.preventDefault();
         drawing = true;
@@ -145,12 +146,12 @@ function initializeApp(data) {
                 'y': e.pageY,
                 'touch': false,
                 'drawing': drawing,
-                'id': id
+                'id': id,
+                'userData': userData
             });
             lastEmit = $.now();
         }
-        console.log('Line User Data');
-        console.log(userData);
+        
         // Draw a line for the current user's movement
         if (drawing)
         {
@@ -175,7 +176,8 @@ function initializeApp(data) {
                 'startY': prev.y,
                 'touch': true,
                 'drawing': drawing,
-                'id': id
+                'id': id,
+                'userData': userData
             });
             lastEmit = $.now();
         }
@@ -201,6 +203,7 @@ function initializeApp(data) {
 
     // Keep users screen up to date with other users cursors & lines
     socket.on('moving', function (data) {
+        console.log(data);
         // Create cursor
         if ( !(data.id in clients) )
         {
