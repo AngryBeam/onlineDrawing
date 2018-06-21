@@ -1,9 +1,8 @@
-//import eachSeries from 'async/eachSeries';
-var async = require('async'); // for serving files
+//var async = require('async'); // for serving files
 
 var temp = ['A','B','C','D','E'];
 
-/* function tickTock(i) {
+function tickTock(i) {
     return new Promise((resolve, reject) => {
         setTimeout(()=>{
             resolve(temp[i]);
@@ -12,27 +11,37 @@ var temp = ['A','B','C','D','E'];
 }
 
 async function dis(i){
-    await setTimeout(() => {
-        return temp[i];
-    }, 5000);
+    return await setTimeout(async () => {
+        await console.log(i);
+    }, 1000);
 }
 
 async function main (){
-    let res = 0;
 
     for(var i=0; i<temp.length; i++){
-        //let res = await tickTock(i);
-        //console.log(res);
-        res = await dis(i);
-        console.log(`Index ${i} and Res: ${res}`);
+        let res = await tickTock(i);
+        console.log(res);
+        //res = await dis(i);
+        
     };
+    /* await temp.map(arr =>{
+        dis(arr);
+    });  */
+
+    let res = await Promise.all(temp.map(async arr => {
+        
+        await setTimeout(() => {
+            console.log(arr);
+        },1000);
+    }));
 };
-main(); */
+main();
 
 
-async.eachSeries(temp, (data, callback) => {
+
+/* async.eachSeries(temp, (data, callback) => {
     setTimeout(() =>{
         console.log(data);
         callback();
     },1000);
-}, () => { console.log('Done');});
+}, () => { console.log('Done');}); */
