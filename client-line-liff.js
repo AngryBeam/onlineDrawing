@@ -9,11 +9,11 @@ var userData;
 function initializeApp(data) {
     userData = data;
     let profile = liff.getProfile().then(function (profile) {
-        return profile;
+        userData.push(profile);
     }).catch(function (error) {
         window.alert("Error getting profile: " + error);
     });
-    userData.push(profile);
+    
     /*
     document.getElementById('languagefield').textContent = data.language;
     document.getElementById('viewtypefield').textContent = data.context.viewType;
