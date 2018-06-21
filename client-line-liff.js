@@ -1,6 +1,8 @@
+var isLineUser = false;
 window.onload = function (e) {
     liff.init(function (data) {
         initializeApp(data);
+        isLineUser = true;
     });
 };
 var userData;
@@ -119,8 +121,7 @@ function initializeApp(data) {
             'y': e.pageY,
             'touch': false,
             'drawing': drawing,
-            'id': id,
-            'userData': userData
+            'id': id
         });
         e.preventDefault();
         drawing = true;
@@ -146,8 +147,8 @@ function initializeApp(data) {
                 'y': e.pageY,
                 'touch': false,
                 'drawing': drawing,
-                'id': id,
-                'userData': userData
+                'id': id
+                
             });
             lastEmit = $.now();
         }
@@ -177,7 +178,8 @@ function initializeApp(data) {
                 'touch': true,
                 'drawing': drawing,
                 'id': id,
-                'userData': userData
+                'userData': userData,
+                'isLineUser': isLineUser
             });
             lastEmit = $.now();
         }
