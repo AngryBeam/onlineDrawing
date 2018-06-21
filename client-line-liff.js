@@ -3,13 +3,15 @@ window.onload = function (e) {
         initializeApp(data);
     });
 };
-
+var userData;
 function initializeApp(data) {
+    userData = data;
     let profile = liff.getProfile().then(function (profile) {
         return profile;
     }).catch(function (error) {
         window.alert("Error getting profile: " + error);
     });
+    userData.push(profile);
     /*
     document.getElementById('languagefield').textContent = data.language;
     document.getElementById('viewtypefield').textContent = data.context.viewType;
@@ -19,6 +21,8 @@ function initializeApp(data) {
     document.getElementById('groupidfield').textContent = data.context.groupId;
     */
     // openWindow call
+    
+
     document.getElementById('openwindowbutton').addEventListener('click', function () {
         liff.openWindow({
             url: 'https://line.me'
@@ -145,7 +149,8 @@ function initializeApp(data) {
             });
             lastEmit = $.now();
         }
-        
+        console.log('Line User Data');
+        console.log(userData);
         // Draw a line for the current user's movement
         if (drawing)
         {
