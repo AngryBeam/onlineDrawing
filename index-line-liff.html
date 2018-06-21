@@ -13,7 +13,7 @@
         <div class="buttonrow">
             <button id="getprofilebutton">Get Profile</button>
             <button id="sendmessagebutton">Send Message</button>
-            <button id="refresh" onclick="window.location('https://draw-some-thing.herokuapp.com/index-line-liff.html');">Refresh</button>
+            <button id="refresh" onclick="reload()");">Refresh</button>
         </div>
     </div>
 
@@ -24,4 +24,12 @@
     <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
     <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
     <script src="client-line-liff.js"></script>
+    <script>
+
+
+            function reload() {
+                location.reload();
+            }
+ 
+    </script>
 </body>
