@@ -70,7 +70,7 @@ function initializeApp(data) {
 }
 
 
-$(function(){
+
 
     // Configuration
     var url = 'http://127.0.0.1'; // URL of your webserver
@@ -230,4 +230,3 @@ $(function(){
     socket.on('replay', function (data) {
         console.log(data);
     });
-});
