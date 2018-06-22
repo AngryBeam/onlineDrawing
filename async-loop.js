@@ -38,5 +38,3 @@ main();
         callback();
     },1000);
 }, () => { console.log('Done');}); */
-
-
