@@ -77,6 +77,3 @@ io.sockets.on('connection', function (socket) {
 		callback('Received Replay Data.');
 	});
 });
-
-
-
