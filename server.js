@@ -69,7 +69,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('debug', function (data){
 
 	});
-	
+
 	socket.on('submitData', (data, callback) => {
 		data.forEach(element => {
 			
@@ -77,3 +77,6 @@ io.sockets.on('connection', function (socket) {
 		callback('Received Replay Data.');
 	});
 });
+
+
+
