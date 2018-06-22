@@ -2,40 +2,33 @@
 
 var temp = ['A','B','C','D','E'];
 
-function tickTock(i) {
+
+
+function tickTock() {
     return new Promise((resolve, reject) => {
         setTimeout(()=>{
-            resolve(temp[i]);
+            //resolve(temp[i]);
+            resolve();
         }, 1000);
     });
 }
 
-async function dis(i){
-    return await setTimeout(async () => {
-        await console.log(i);
-    }, 1000);
-}
+
 
 async function main (){
 
-    for(var i=0; i<temp.length; i++){
-        let res = await tickTock(i);
-        console.log(res);
-        //res = await dis(i);
-        
-    };
-    /* await temp.map(arr =>{
-        dis(arr);
-    });  */
+    /* for(var i=0; i<temp.length; i++){
+        let res = await tickTock();
+        console.log(temp[i]);
+    };  */
 
-    let res = await Promise.all(temp.map(async arr => {
-        
-        await setTimeout(() => {
-            console.log(arr);
-        },1000);
-    }));
+    /* temp.forEach(async ele => {
+        let res = await tickTock();
+        console.log(ele);
+    }); */
+
 };
-main();
+main(); 
 
 
 

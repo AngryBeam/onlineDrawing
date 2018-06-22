@@ -1,30 +1,46 @@
+var socket = io();
 var isLineUser = false;
+// Configuration
+var line_thickness = 7;
+var line_colour = "blue";
+
+// Variables
+var canvas = $('#paper');
+var ctx = canvas[0].getContext('2d');
+var id = Math.round($.now() * Math.random()); // Generate a unique ID
+var drawing = false; // A flag for drawing activity
+var touchUsed = false; // A flag to figure out if touch was used
+var clients = {};
+var cursors = {};
+var prev = {}; // Previous coordinates container
+var lastEmit = $.now();
+var replayData = [];
+var userData = [];
+
 window.onload = function (e) {
     liff.init(function (data) {
         initializeApp(data);
         isLineUser = true;
     });
 };
-var userData = [];
+
 function initializeApp(data) {
     userData.push(data);
     let profile = liff.getProfile().then(function (profile) {
         userData.push(profile);
+        socket.emit('lineRegister', userData, function (msg){
+            alert(msg);
+        });
     }).catch(function (error) {
         window.alert("Error getting profile: " + error);
     });
-    
-    /*
-    document.getElementById('languagefield').textContent = data.language;
-    document.getElementById('viewtypefield').textContent = data.context.viewType;
-    document.getElementById('useridfield').textContent = data.context.userId;
-    document.getElementById('utouidfield').textContent = data.context.utouId;
-    document.getElementById('roomidfield').textContent = data.context.roomId;
-    document.getElementById('groupidfield').textContent = data.context.groupId;
-    */
-    // openWindow call
-    
 
+    document.getElementById('submit-drawing-data').addEventListener('click', function () {
+        socket.emit('submitData', replayData, function (msg){
+            alert(msg);
+        });
+    });
+    
     document.getElementById('openwindowbutton').addEventListener('click', function () {
         liff.openWindow({
             url: 'https://line.me'
@@ -52,53 +68,20 @@ function initializeApp(data) {
         });
     });
 
-    //get profile call
-    document.getElementById('getprofilebutton').addEventListener('click', function () {
-        liff.getProfile().then(function (profile) {
-            document.getElementById('useridprofilefield').textContent = profile.userId;
-            document.getElementById('displaynamefield').textContent = profile.displayName;
-
-            var profilePictureDiv = document.getElementById('profilepicturediv');
-            if (profilePictureDiv.firstElementChild) {
-                profilePictureDiv.removeChild(profilePictureDiv.firstElementChild);
-            }
-            var img = document.createElement('img');
-            img.src = profile.pictureUrl;
-            img.alt = "Profile Picture";
-            profilePictureDiv.appendChild(img);
-
-            document.getElementById('statusmessagefield').textContent = profile.statusMessage;
-            
-        }).catch(function (error) {
-            window.alert("Error getting profile: " + error);
-        });
-    });
 }
 
 
 
 
-    // Configuration
-    var url = 'http://127.0.0.1'; // URL of your webserver
-    var line_thickness = 7;
-    var line_colour = "blue";
+    
 
-    // Variables
-    var canvas = $('#paper');
-    var ctx = canvas[0].getContext('2d');
-    var id = Math.round($.now() * Math.random()); // Generate a unique ID
-    var drawing = false; // A flag for drawing activity
-    var touchUsed = false; // A flag to figure out if touch was used
-    var clients = {};
-    var cursors = {};
-    var prev = {}; // Previous coordinates container
-    //var socket = io.connect(url);
-    var lastEmit = $.now();
-    var socket = io();
     $('#doReplay').click(function (e){
         e.preventDefault;
-        console.log('Button Click');
         socket.emit('replay', true);
+    });
+    $('#debug').click(function (e){
+        e.preventDefault;
+        socket.emit('debug', true);
     });
 
 
@@ -116,7 +99,7 @@ function initializeApp(data) {
     
     // On mouse down
     canvas.on('mousedown', function(e) {
-        socket.emit('beforemousemove', {
+        replayData.push({
             'x': e.pageX,
             'y': e.pageY,
             'touch': false,
@@ -142,13 +125,19 @@ function initializeApp(data) {
         // Emit the event to the server
         if ($.now() - lastEmit > 30)
         {
-            socket.emit('mousemove', {
+            /* socket.emit('mousemove', {
                 'x': e.pageX,
                 'y': e.pageY,
                 'touch': false,
                 'drawing': drawing,
-                'id': id
-                
+                'id': id          
+            }); */
+            replayData.push({
+                'x': e.pageX,
+                'y': e.pageY,
+                'touch': false,
+                'drawing': drawing,
+                'id': id          
             });
             lastEmit = $.now();
         }
@@ -170,7 +159,18 @@ function initializeApp(data) {
         // Emit the event to the server
         if ($.now() - lastEmit > 10)
         {
-            socket.emit('mousemove', {
+            /* socket.emit('mousemove', {
+                'x': touch.pageX,
+                'y': touch.pageY,
+                'startX': prev.x,
+                'startY': prev.y,
+                'touch': true,
+                'drawing': drawing,
+                'id': id,
+                'userData': userData,
+                'isLineUser': isLineUser
+            }); */
+            replayData.push({
                 'x': touch.pageX,
                 'y': touch.pageY,
                 'startX': prev.x,
@@ -238,5 +238,20 @@ function initializeApp(data) {
     });
 
     socket.on('replay', function (data) {
+        console.log('Replay data received.');
+        console.log(data);
+        (function theLoop (data, i) {
+            setTimeout(function () {
+            rePlay(data[i]);
+            --i;
+            if (i >= 0) {          // If i > 0, keep going
+                theLoop(data,i);       // Call the loop again, and pass it the current value of i
+            }
+            }, 70);
+        })(data.reverse(), data.length-1);
+    });
+
+    socket.on('debug', function (data){
         console.log(data);
     });
+

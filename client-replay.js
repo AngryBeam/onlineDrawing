@@ -67,15 +67,6 @@ $(function(){
     socket.on('replay', function (data) {
         console.log('Replay data received.');
         console.log(data);
-   
-        /* data.forEach(element => {
-            //setInterval(rePlay(element), 2000);
-    
-            rePlay(element);
-           
-        });
- */
-        //var data = [1,2,3,4,5];
 
         (function theLoop (data, i) {
             setTimeout(function () {
@@ -86,8 +77,5 @@ $(function(){
             }
             }, 70);
         })(data.reverse(), data.length-1);
-
-        
-
     });
 });
