@@ -26,11 +26,11 @@ window.onload = function (e) {
 function initializeApp(data) {
     
     let profile = liff.getProfile().then(function (profile) {
-        
+        var lineUserData = data.context;
         isLineUser = true;
         userData = { 
             'isLineUser': isLineUser,
-            'userData': data,
+            'userData': lineUserData,
             'userProfile': profile
         };
         alert('Getting Profile Completed.');
