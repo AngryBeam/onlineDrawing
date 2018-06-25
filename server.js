@@ -63,7 +63,7 @@ io.sockets.on('connection', function (socket) {
 			var lineUserID = data.userData.userId;
 			//lineUserData[lineUserID].push(data.userData, data.userProfile);
 			lineUserData.push({ 
-				'lineUserID': lineUserID,
+				'userData': data.userData,
 				'userProfile': data.userProfile,
 				'gameData': ''
 			});
@@ -81,7 +81,7 @@ io.sockets.on('connection', function (socket) {
 				'userData': lineUserID,
 				'gameData': ''
 			} */
-			
+
 			console.log(lineUserData);
 			socket.broadcast.emit('debug', lineUserData);
 		}
