@@ -5,7 +5,7 @@ var static = require('node-static'); // for serving files
 
 // This will make all the files in the current folder
 // accessible from the web
-var fileServer = new static.Server('./');
+//var fileServer = new static.Server('./');
 	
 
 const port = process.env.PORT || 8080;
@@ -61,11 +61,13 @@ io.sockets.on('connection', function (socket) {
 		if(data.isLineUser){
 			var lineUserID = data.userData.userId;
 			//lineUserData[lineUserID].push(data.userData, data.userProfile);
-			lineUserData.push(lineUserID);
-			lineUserData[lineUserID] = { 
+			var ObjData = { 
+				'lineUserID': lineUserID,
 				'userData': data.userData,
 				'userProfile': data.userProfile
-			};
+			}
+			lineUserData.push(ObjData);
+			
 			socket.broadcast.emit('debug', lineUserData);
 		}
 		callback(`Received Line User Data. with (${data.isLineUser}) , lineUserID: ${lineUserID}`);
