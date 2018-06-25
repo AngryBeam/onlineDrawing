@@ -60,7 +60,11 @@ io.sockets.on('connection', function (socket) {
 	socket.on('lineRegister', (data, callback) => {
 		if(data.isLineUser){
 			var lineUserID = data.userData.userId;
-			lineUserData[lineUserID].push(data.userData, data.userProfile);
+			//lineUserData[lineUserID].push(data.userData, data.userProfile);
+			lineUserData[lineUserID] = { 
+				'userData': data.userData,
+				'userProfile': data.userProfile
+			};
 			socket.broadcast.emit('debug', lineUserData);
 		}
 		callback(`Received Line User Data. with (${data.isLineUser}) , lineUserID: ${lineUserID}`);
