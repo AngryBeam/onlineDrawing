@@ -36,7 +36,9 @@ function initializeApp(data) {
     });
 
     document.getElementById('submit-drawing-data').addEventListener('click', function () {
+        
         socket.emit('submitData', replayData, function (msg){
+            replayData = [];
             alert(msg);
         });
     });

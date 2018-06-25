@@ -71,9 +71,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('submitData', (data, callback) => {
-		data.forEach(element => {
-			
-		});
+		socket.broadcast.emit('debug', data);
 		callback('Received Replay Data.');
 	});
 });
