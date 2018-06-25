@@ -5,7 +5,7 @@ var static = require('node-static'); // for serving files
 
 // This will make all the files in the current folder
 // accessible from the web
-//var fileServer = new static.Server('./');
+var fileServer = new static.Server('./');
 	
 
 const port = process.env.PORT || 8080;
