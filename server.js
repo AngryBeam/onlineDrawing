@@ -1,17 +1,11 @@
 // Including libraries
-
-/* var app = require('http').createServer(handler);
-var io = require('socket.io').listen(app);
-var static = require('node-static'); // for serving files */
 const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
 const {Users} = require('./utils/users');
-// This will make all the files in the current folder
-// accessible from the web
-//var fileServer = new static.Server('./');
+
 const publicPath = path.join(__dirname, './');
 const port = process.env.PORT || 3000;
 var app = express();
@@ -20,10 +14,15 @@ var io = socketIO(server);
 var users = new Users();
 app.use(express.static(publicPath));
 
-/* app.listen(port); */
-
-
-/* function handler(request, response) {
+//Using node static for transport type = websocket
+/* var app = require('http').createServer(handler);
+var io = require('socket.io').listen(app);
+var static = require('node-static'); // for serving files 
+// This will make all the files in the current folder
+// accessible from the web
+var fileServer = new static.Server('./');
+app.listen(port);
+function handler(request, response) {
 	request.addListener('end', function () {
 		fileServer.serve(request, response);
 	}).resume();
@@ -71,6 +70,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('lineRegister', (data, callback) => {
+		console.log(`Receiving lineRegister Command via Data: ${data}`);
 		if(data.isLineUser){
 			var lineUserID = data.userData.userId;
 			var channelID;
@@ -111,6 +111,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('submitData', (data, callback) => {
+		console.log(`Receiving submitData Command via Data: ${data}`);
 		socket.broadcast.emit('debug', data);
 		callback('Received Replay Data.');
 	});
