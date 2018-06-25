@@ -25,9 +25,14 @@ window.onload = function (e) {
 };
 
 function initializeApp(data) {
-    userData.push(data);
+    //userData.push(data);
+    userData = { 
+        'isLineUser': isLineUser,
+        'userData': data 
+    };
     let profile = liff.getProfile().then(function (profile) {
-        userData.push(profile);
+        //userData.push(profile);
+        userData.userProfile = profile;
         socket.emit('lineRegister', userData, function (msg){
             alert(msg);
         });
