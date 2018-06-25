@@ -19,7 +19,7 @@ function handler(request, response) {
 }
 
 var replayData,lineUserData = [];
-var gameData = ['utou', 'room', 'group'];
+
 
 // Listen for incoming connections from clients
 io.sockets.on('connection', function (socket) {
@@ -64,10 +64,11 @@ io.sockets.on('connection', function (socket) {
 			//lineUserData[lineUserID].push(data.userData, data.userProfile);
 			lineUserData.push({ 
 				'lineUserID': lineUserID,
-				'userProfile': data.userProfile
+				'userProfile': data.userProfile,
+				'gameData': ''
 			});
 
-			var channelID;
+			/* var channelID;
 			if (data.userData.type == 'utou'){
 				channelID = data.userData.utouId;
 			}else if(data.userData.type == 'group'){
@@ -75,13 +76,13 @@ io.sockets.on('connection', function (socket) {
 			}else if(data.userData.type == 'room'){
 				channelID = data.userData.roomId;
 			}
-			gameData[data.userData.type] = {
+			var gameData =	{
 				'id': channelID,
 				'userData': lineUserID,
 				'gameData': ''
-			}
-			console.log(gameData);
-			socket.broadcast.emit('debug', gameData);
+			} */
+			console.log(lineUserData);
+			socket.broadcast.emit('debug', lineUserData);
 		}
 		callback(`Received Line User Data. with lineUserID: ${lineUserID}`);
 	});
