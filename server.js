@@ -81,6 +81,7 @@ io.sockets.on('connection', function (socket) {
 				'channelId': channelID,
 				'gameData': gameData
 			}
+			//Before can push have to check type and channel id is dupplicated or not
 			lineUserData.push(userData);
 
 

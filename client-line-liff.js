@@ -10,6 +10,7 @@ var ctx = canvas[0].getContext('2d');
 var id = Math.round($.now() * Math.random()); // Generate a unique ID
 var drawing = false; // A flag for drawing activity
 var touchUsed = false; // A flag to figure out if touch was used
+var deleting = false;
 var clients = {};
 var cursors = {};
 var prev = {}; // Previous coordinates container
@@ -33,7 +34,7 @@ function initializeApp(data) {
             'userData': lineUserData,
             'userProfile': profile
         };
-        
+
         socket.emit('debug', userData);
     }).catch(function (error) {
         window.alert("Error getting profile: " + error);
@@ -54,9 +55,10 @@ function initializeApp(data) {
         });
     });
 
-    document.getElementById('userData').addEventListener('click', function () {
-        
-        alert(userData);
+    document.getElementById('delete').addEventListener('click', function () {
+        line_thickness = 10;
+        line_colour = "white";
+        deleting = true;
     });
     
     document.getElementById('openwindowbutton').addEventListener('click', function () {
@@ -214,11 +216,21 @@ function initializeApp(data) {
     // On mouse up
     canvas.on('mouseup mouseleave', function(e) {
         drawing = false;
+        if(deleting){
+            line_thickness = 7;
+            line_colour = "blue";
+            deleting = false;
+        }
     });
 
     // On touch end
     canvas.on('touchend touchleave touchcancel', function(e) {
         drawing = false;
+        if(deleting){
+            line_thickness = 7;
+            line_colour = "blue";
+            deleting = false;
+        }
     });
 
     // Keep users screen up to date with other users cursors & lines
