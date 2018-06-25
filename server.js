@@ -12,7 +12,7 @@ const {Users} = require('./utils/users');
 // This will make all the files in the current folder
 // accessible from the web
 //var fileServer = new static.Server('./');
-const publicPath = path.join(__dirname, '../public');
+const publicPath = path.join(__dirname, './');
 const port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
