@@ -20,24 +20,30 @@ var userData = [];
 window.onload = function (e) {
     liff.init(function (data) {
         initializeApp(data);
-        isLineUser = true;
     });
 };
 
 function initializeApp(data) {
-    //userData.push(data);
-    userData = { 
-        'isLineUser': isLineUser,
-        'userData': data 
-    };
+    
     let profile = liff.getProfile().then(function (profile) {
-        //userData.push(profile);
-        userData.userProfile = profile;
+        
+        isLineUser = true;
+        userData = { 
+            'isLineUser': isLineUser,
+            'userData': data,
+            'userProfile': profile
+        };
+        alert('Getting Profile Completed.');
+        socket.emit('debug', userData);
+    }).catch(function (error) {
+        window.alert("Error getting profile: " + error);
+    });
+
+    document.getElementById('submit-line-data').addEventListener('click', function () {
+        
         socket.emit('lineRegister', userData, function (msg){
             alert(msg);
         });
-    }).catch(function (error) {
-        window.alert("Error getting profile: " + error);
     });
 
     document.getElementById('submit-drawing-data').addEventListener('click', function () {

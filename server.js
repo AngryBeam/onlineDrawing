@@ -68,7 +68,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('debug', function (data){
-
+		socket.broadcast.emit('debug', data);
 	});
 
 	socket.on('submitData', (data, callback) => {
