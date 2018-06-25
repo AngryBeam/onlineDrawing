@@ -19,6 +19,7 @@ function handler(request, response) {
 }
 
 var replayData,lineUserData = [];
+var gameData = [];
 
 // Listen for incoming connections from clients
 io.sockets.on('connection', function (socket) {
@@ -61,16 +62,28 @@ io.sockets.on('connection', function (socket) {
 		if(data.isLineUser){
 			var lineUserID = data.userData.userId;
 			//lineUserData[lineUserID].push(data.userData, data.userProfile);
-			var ObjData = { 
-				'userData': data.userData,
+			lineUserData.push({ 
+				'lineUserID': lineUserID,
 				'userProfile': data.userProfile
+			});
+
+			var channelID;
+			if (data.userData.type == 'utou'){
+				channelID = data.userData.utouId;
+			}else if(data.userData.type == 'group'){
+				channelID = data.userData.groupId;
+			}else if(data.userData.type == 'room'){
+				channelID = data.userData.roomId;
 			}
-			lineUserData.push(lineUserID);
-			lineUserData[lineUserID] = ObjData;
+			gameData[data.userData.type] = {
+				'id': channelID,
+				'userData': lineUserID,
+				'gameData': ''
+			}
 			
-			socket.broadcast.emit('debug', lineUserData);
+			socket.broadcast.emit('debug', gameData);
 		}
-		callback(`Received Line User Data. with (${data.isLineUser}) , lineUserID: ${lineUserID}`);
+		callback(`Received Line User Data. with lineUserID: ${lineUserID}`);
 	});
 
 	socket.on('debug', function (data){
