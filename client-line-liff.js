@@ -42,6 +42,11 @@ function initializeApp(data) {
             alert(msg);
         });
     });
+
+    document.getElementById('userData').addEventListener('click', function () {
+        
+        alert(userData);
+    });
     
     document.getElementById('openwindowbutton').addEventListener('click', function () {
         liff.openWindow({
