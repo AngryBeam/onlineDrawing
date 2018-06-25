@@ -61,14 +61,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('lineRegister', (data, callback) => {
 		if(data.isLineUser){
 			var lineUserID = data.userData.userId;
-			//lineUserData[lineUserID].push(data.userData, data.userProfile);
-			lineUserData.push({ 
-				'userData': data.userData,
-				'userProfile': data.userProfile,
-				'gameData': ''
-			});
-
-			/* var channelID;
+			var channelID;
 			if (data.userData.type == 'utou'){
 				channelID = data.userData.utouId;
 			}else if(data.userData.type == 'group'){
@@ -76,6 +69,18 @@ io.sockets.on('connection', function (socket) {
 			}else if(data.userData.type == 'room'){
 				channelID = data.userData.roomId;
 			}
+			var userData = {
+				'userId': data.userData.userId,
+				'type': data.userData.type,
+				'channelId': channelID
+			}
+			lineUserData.push({ 
+				'userData': userData,
+				'userProfile': data.userProfile,
+				'gameData': ''
+			});
+
+			/* 
 			var gameData =	{
 				'id': channelID,
 				'userData': lineUserID,
