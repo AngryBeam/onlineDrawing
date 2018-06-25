@@ -1,29 +1,39 @@
 // Including libraries
 
-var app = require('http').createServer(handler);
+/* var app = require('http').createServer(handler);
 var io = require('socket.io').listen(app);
-var static = require('node-static'); // for serving files
+var static = require('node-static'); // for serving files */
+const path = require('path');
+const http = require('http');
+const express = require('express');
+const socketIO = require('socket.io');
+
 const {Users} = require('./utils/users');
 // This will make all the files in the current folder
 // accessible from the web
-var fileServer = new static.Server('./');
-	
+//var fileServer = new static.Server('./');
+const publicPath = path.join(__dirname, '../public');
+const port = process.env.PORT || 3000;
+var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
+var users = new Users();
+app.use(express.static(publicPath));
 
-const port = process.env.PORT || 8080;
-app.listen(port);
+/* app.listen(port); */
 
 
-function handler(request, response) {
+/* function handler(request, response) {
 	request.addListener('end', function () {
 		fileServer.serve(request, response);
 	}).resume();
-}
+} */
 
 var replayData,lineUserData = [];
-var users = new Users();
+
 
 // Listen for incoming connections from clients
-io.sockets.on('connection', function (socket) {
+io.on('connection', function (socket) {
 
 	console.log('New Connection for id ' + socket.id);
 	
@@ -57,6 +67,7 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('disconnect', () => {
 		console.log('Disconnected for id ' + socket.id);
+		users.removeUser();
 	});
 
 	socket.on('lineRegister', (data, callback) => {
@@ -103,4 +114,9 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('debug', data);
 		callback('Received Replay Data.');
 	});
+});
+
+
+server.listen(port, () => {
+	console.log(`Server is up on ${port}`);
 });
