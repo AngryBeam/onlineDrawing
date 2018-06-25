@@ -33,6 +33,7 @@ function initializeApp(data) {
             'userData': lineUserData,
             'userProfile': profile
         };
+        
         socket.emit('debug', userData);
     }).catch(function (error) {
         window.alert("Error getting profile: " + error);

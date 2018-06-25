@@ -81,6 +81,7 @@ io.sockets.on('connection', function (socket) {
 				'userData': lineUserID,
 				'gameData': ''
 			} */
+			
 			console.log(lineUserData);
 			socket.broadcast.emit('debug', lineUserData);
 		}
