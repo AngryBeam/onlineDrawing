@@ -62,11 +62,10 @@ io.sockets.on('connection', function (socket) {
 			var lineUserID = data.userData.userId;
 			//lineUserData[lineUserID].push(data.userData, data.userProfile);
 			var ObjData = { 
-				'lineUserID': lineUserID,
 				'userData': data.userData,
 				'userProfile': data.userProfile
 			}
-			lineUserData.push(ObjData);
+			lineUserData[lineUserID].push(ObjData);
 			
 			socket.broadcast.emit('debug', lineUserData);
 		}
