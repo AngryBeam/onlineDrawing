@@ -80,7 +80,7 @@ io.sockets.on('connection', function (socket) {
 				'userData': lineUserID,
 				'gameData': ''
 			}
-			
+			console.log(gameData);
 			socket.broadcast.emit('debug', gameData);
 		}
 		callback(`Received Line User Data. with lineUserID: ${lineUserID}`);
