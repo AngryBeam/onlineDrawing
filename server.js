@@ -19,7 +19,7 @@ function handler(request, response) {
 }
 
 var replayData,lineUserData = [];
-var gameData = [];
+var gameData = ['utou', 'room', 'group'];
 
 // Listen for incoming connections from clients
 io.sockets.on('connection', function (socket) {
