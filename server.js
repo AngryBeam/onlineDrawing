@@ -1,8 +1,9 @@
 // Including libraries
+
 var app = require('http').createServer(handler);
 var io = require('socket.io').listen(app);
 var static = require('node-static'); // for serving files
-
+const {Users} = require('./utils/users');
 // This will make all the files in the current folder
 // accessible from the web
 var fileServer = new static.Server('./');
@@ -19,7 +20,7 @@ function handler(request, response) {
 }
 
 var replayData,lineUserData = [];
-
+var users = new Users();
 
 // Listen for incoming connections from clients
 io.sockets.on('connection', function (socket) {
@@ -74,19 +75,22 @@ io.sockets.on('connection', function (socket) {
 				'keyword': '',
 				'replayData': ''
 			}
-			var userData = {
+			
+			/* var userData = {
 				'userId': data.userData.userId,
 				'profile': data.userProfile,
 				'type': data.userData.type,
 				'channelId': channelID,
 				'gameData': gameData
-			}
+			} */
+			var userData = users.addUser(data.userData.userId, data.userProfile, data.userData.type, channelID, gameData);
 			//Before can push have to check type and channel id is dupplicated or not
 			lineUserData.push(userData);
 
-
-			console.log(lineUserData);
 			socket.broadcast.emit('debug', lineUserData);
+			socket.broadcast.emit('debug', '=================');
+			socket.broadcast.emit('debug', users);
+
 		}
 		callback(`Received Line User Data. with lineUserID: ${lineUserID}`);
 	});

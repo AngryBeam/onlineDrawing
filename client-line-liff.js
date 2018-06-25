@@ -56,7 +56,7 @@ function initializeApp(data) {
     });
 
     document.getElementById('delete').addEventListener('click', function () {
-        line_thickness = 10;
+        line_thickness = 20;
         line_colour = "white";
         deleting = true;
     });
