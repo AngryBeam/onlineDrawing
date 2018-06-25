@@ -61,6 +61,7 @@ io.sockets.on('connection', function (socket) {
 		if(data.isLineUser){
 			var lineUserID = data.userData.userId;
 			//lineUserData[lineUserID].push(data.userData, data.userProfile);
+			lineUserData.push(lineUserID);
 			lineUserData[lineUserID] = { 
 				'userData': data.userData,
 				'userProfile': data.userProfile
@@ -68,7 +69,6 @@ io.sockets.on('connection', function (socket) {
 			socket.broadcast.emit('debug', lineUserData);
 		}
 		callback(`Received Line User Data. with (${data.isLineUser}) , lineUserID: ${lineUserID}`);
-		socket.broadcast.emit('debug', lineUserData);
 	});
 
 	socket.on('debug', function (data){
