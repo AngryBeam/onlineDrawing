@@ -63,7 +63,8 @@ io.sockets.on('connection', function (socket) {
 			lineUserData[lineUserID].push(data.userData[0].context, data.userData[1]);
 			socket.broadcast.emit('debug', lineUserData);
 		}
-		callback('Received Line User Data.');
+		callback(`Received Line User Data. with (${data.isLineUser}) , lineUserID: ${lineUserID}`);
+		socket.broadcast.emit('debug', lineUserData);
 	});
 
 	socket.on('debug', function (data){
