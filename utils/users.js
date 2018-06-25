@@ -13,8 +13,8 @@
     constructor () {
       this.users = [];
     }
-    addUser (userId,profile,type,channelId,gameData) {
-      var user = {userId,profile,type,channelId,gameData};
+    addUser (id,userId,profile,type,channelId,gameData) {
+      var user = {id,userId,profile,type,channelId,gameData};
       this.users.push(user);
       return user;
     }

@@ -86,7 +86,9 @@ io.on('connection', function (socket) {
 				'keyword': '',
 				'replayData': ''
 			}
-			
+			users.addUser(socket.id, data.userData.userId, data.userProfile, data.userData.type, channelID, gameData);
+			users.removeUser(socket.id);
+			socket.join(channelID);
 			/* var userData = {
 				'userId': data.userData.userId,
 				'profile': data.userProfile,
@@ -94,13 +96,12 @@ io.on('connection', function (socket) {
 				'channelId': channelID,
 				'gameData': gameData
 			} */
-			var userData = users.addUser(data.userData.userId, data.userProfile, data.userData.type, channelID, gameData);
 			//Before can push have to check type and channel id is dupplicated or not
-			lineUserData.push(userData);
+			/* lineUserData.push(userData);
 
 			socket.broadcast.emit('debug', lineUserData);
 			socket.broadcast.emit('debug', '=================');
-			socket.broadcast.emit('debug', users);
+			socket.broadcast.emit('debug', users); */
 
 		}
 		callback(`Received Line User Data. with lineUserID: ${lineUserID}`);
