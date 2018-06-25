@@ -65,7 +65,7 @@ io.sockets.on('connection', function (socket) {
 				'userData': data.userData,
 				'userProfile': data.userProfile
 			}
-			lineUserData[lineUserID].push(ObjData);
+			lineUserData[lineUserID] = ObjData;
 			
 			socket.broadcast.emit('debug', lineUserData);
 		}
