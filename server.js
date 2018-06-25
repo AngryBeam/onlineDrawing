@@ -69,23 +69,20 @@ io.sockets.on('connection', function (socket) {
 			}else if(data.userData.type == 'room'){
 				channelID = data.userData.roomId;
 			}
+			var gameData = {
+				'status': false,
+				'keyword': '',
+				'replayData': ''
+			}
 			var userData = {
 				'userId': data.userData.userId,
+				'profile': data.userProfile,
 				'type': data.userData.type,
-				'channelId': channelID
+				'channelId': channelID,
+				'gameData': gameData
 			}
-			lineUserData.push({ 
-				'userData': userData,
-				'userProfile': data.userProfile,
-				'gameData': ''
-			});
+			lineUserData.push(userData);
 
-			/* 
-			var gameData =	{
-				'id': channelID,
-				'userData': lineUserID,
-				'gameData': ''
-			} */
 
 			console.log(lineUserData);
 			socket.broadcast.emit('debug', lineUserData);
