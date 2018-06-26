@@ -29,7 +29,9 @@
       this.pictureUrl = data.userProfile.pictureUrl;
       this.gameData = [];
       this.channelId = this.getChannelID();
-      if(!this.getUser(this.lineUserID,this.channelType,this.channelId)){
+      var getUser = this.getUser(this.lineUserID,this.channelType,this.channelId);
+      console.log(getUser);
+      if(!getUSer){
         return this.addUser();
       }
     }

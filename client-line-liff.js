@@ -64,6 +64,7 @@ function initializeApp(data) {
     });
 
     document.getElementById('getUserList').addEventListener('click', function () {
+        alert('getuserlist');
         socket.emit('requestUserList', userData);
     });
 
