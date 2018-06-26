@@ -123,8 +123,11 @@ io.on('connection', function (socket) {
 
 	socket.on('requestUserList', function (data){
 		var user = users.getUser(socket.id);
-		var userList = users.getUserList(user.type, user.channelID);
-		socket.broadcast.emit('debug', userList);
+		socket.broadcast.emit('debug', '=====requestUserList=====');
+		socket.broadcast.emit('debug', user);
+		console.log(user);
+		//var userList = users.getUserList(user.type, user.channelID);
+		//socket.broadcast.emit('debug', userList);
 	});
 });
 
