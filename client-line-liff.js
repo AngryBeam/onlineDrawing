@@ -42,13 +42,6 @@ function initializeApp(data) {
     }).catch(function (error) {
         window.alert("Error getting profile: " + error);
     });
-
-    /* document.getElementById('submit-line-data').addEventListener('click', function () {
-        
-        socket.emit('lineRegister', userData, function (msg){
-            alert(msg);
-        });
-    }); */
     
     document.getElementById('submit-drawing-data').addEventListener('click', function () {
         var drawKeyword =  document.getElementById('drawKeyword').value;
@@ -68,6 +61,10 @@ function initializeApp(data) {
         liff.openWindow({
             url: 'https://line.me'
         });
+    });
+
+    document.getElementById('getUserList').addEventListener('click', function () {
+        socket.emit('requestUserList', userData);
     });
 
     // closeWindow call
@@ -106,10 +103,7 @@ function initializeApp(data) {
         e.preventDefault;
         socket.emit('debug', true);
     });
-    $('#getUserList').click(function (e){
-        e.preventDefault;
-        socket.emit('requestUserList', true);
-    });
+
 
 
     // Drawing helper function
