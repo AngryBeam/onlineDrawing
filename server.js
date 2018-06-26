@@ -54,7 +54,7 @@ io.on('connection', function (socket) {
 	
 	socket.on('lineRegister', (data, callback) => {
 		console.log(`Receiving lineRegister Command via Data: ${data}`);
-		if(isLine){ 
+		if(isLine(data)){ 
 			callback(`Received Line User Data. with lineUserID: ${lineUserID}`);
 		}
 	});
