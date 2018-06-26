@@ -80,7 +80,6 @@
       if(index){
         this.users[index].gameData.push(gameData);
       }
-      return user;
     }
 
     getChannelID(){
