@@ -68,23 +68,30 @@ io.on('connection', function (socket) {
 		console.log('Disconnected for id ' + socket.id);
 		users.removeUser();
 	});
-
+	
+	function getChannelID(data){
+		var channelID;
+		if (data.userData.type == 'utou'){
+			channelID = data.userData.utouId;
+		}else if(data.userData.type == 'group'){
+			channelID = data.userData.groupId;
+		}else if(data.userData.type == 'room'){
+			channelID = data.userData.roomId;
+		}
+		return channelID;
+	}
 	socket.on('lineRegister', (data, callback) => {
 		console.log(`Receiving lineRegister Command via Data: ${data}`);
 		if(data.isLineUser){
 			var lineUserID = data.userData.userId;
-			var channelID;
-			if (data.userData.type == 'utou'){
-				channelID = data.userData.utouId;
-			}else if(data.userData.type == 'group'){
-				channelID = data.userData.groupId;
-			}else if(data.userData.type == 'room'){
-				channelID = data.userData.roomId;
+			var channelID = getChannelID(data);
+			
+			
+			if(!users.getUser(data.userData.userId, data.userData.type, channelID)){
+				console.log('User added');
+				users.addUser(data.userData.userId, data.userProfile, data.userData.type, channelID, []);
 			}
 			
-			users.removeUser(socket.id);
-
-			users.addUser(socket.id, data.userData.userId, data.userProfile, data.userData.type, channelID, []);
 			
 			socket.join(channelID);
 			/* var userData = {
@@ -122,7 +129,8 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('requestUserList', function (data){
-		var user = users.getUser(socket.id);
+		var channelID = getChannelID(data);
+		var user = users.getUser(data.userData.userId, data.userData.type, channelID);
 		socket.broadcast.emit('debug', '=====requestUserList=====');
 		socket.broadcast.emit('debug', user);
 		console.log(user);

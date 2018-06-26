@@ -19,22 +19,22 @@
     constructor () {
       this.users = [];
     }
-    addUser (id,userId,profile,type,channelId,gameData) {
-      var user = {id,userId,profile,type,channelId,gameData};
+    addUser (userId,profile,type,channelId,gameData) {
+      var user = {userId,profile,type,channelId,gameData};
       this.users.push(user);
       return user;
     }
-    removeUser (id) {
-      var user = this.getUser(id);
+    removeUser (userId,type,channelId) {
+      var user = this.getUser(userId,type,channelId);
   
       if (user) {
-        this.users = this.users.filter((user) => user.id !== id);
+        this.users = this.users.filter((user) => user.userId !== userId && user.type !== type && user.channelId !== channelId);
       }
   
       return user;
     }
-    getUser (id) {
-      return this.users.filter((user) => user.id === id)[0]
+    getUser (userId,type,channelId) {
+      return this.users.filter((user) => user.userId === userId && user.type === type && user.channelId === channelId)[0]
     }
     getUserList (type, channelId) {
       var users = this.users.filter((user) => user.type === type && user.channelId === channelId);
@@ -42,7 +42,7 @@
   
       return namesArray;
     }
-    saveGame(id, gameData){
+    saveGame(gameData){
       var user = this.getUser(id);
       if(user){
         this.users[id].gameData.push(gameData);
