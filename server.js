@@ -82,8 +82,10 @@ io.on('connection', function (socket) {
 				channelID = data.userData.roomId;
 			}
 			
-			users.addUser(socket.id, data.userData.userId, data.userProfile, data.userData.type, channelID, []);
 			users.removeUser(socket.id);
+
+			users.addUser(socket.id, data.userData.userId, data.userProfile, data.userData.type, channelID, []);
+			
 			socket.join(channelID);
 			/* var userData = {
 				'userId': data.userData.userId,
@@ -96,8 +98,8 @@ io.on('connection', function (socket) {
 			/* lineUserData.push(userData);
 
 			socket.broadcast.emit('debug', lineUserData);
-			socket.broadcast.emit('debug', '=================');
-			socket.broadcast.emit('debug', users); */
+			socket.broadcast.emit('debug', '=================');*/
+			socket.broadcast.emit('debug', users); 
 
 		}
 		callback(`Received Line User Data. with lineUserID: ${lineUserID}`);
