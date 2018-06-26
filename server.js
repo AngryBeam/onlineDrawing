@@ -93,7 +93,7 @@ io.on('connection', function (socket) {
 			}
 			
 			
-			socket.join(channelID);
+			//socket.join(channelID);
 			/* var userData = {
 				'userId': data.userData.userId,
 				'profile': data.userProfile,
@@ -129,6 +129,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('requestUserList', function (data){
+		console.log(`Received command requestUserList with ${data}`);
 		var channelID = getChannelID(data);
 		var user = users.getUser(data.userData.userId, data.userData.type, channelID);
 		socket.broadcast.emit('debug', '=====requestUserList=====');
