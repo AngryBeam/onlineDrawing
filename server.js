@@ -108,14 +108,14 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('submitData', (drawKeyword, data, callback) => {
-		console.log(`Receiving submitData Command via Data: ${data}`);
+		//console.log(`Receiving submitData Command via Data: ${data}`);
 		var gameData = {
 			'status': true,
 			'keyword': drawKeyword,
 			'replayData': data
 		}
 		users.saveGame(socket.id, gameData);
-		socket.broadcast.emit('debug', data);
+		socket.broadcast.emit('debug', gameData);
 		callback('Received Replay Data.');
 	});
 });
