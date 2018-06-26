@@ -81,12 +81,8 @@ io.on('connection', function (socket) {
 			}else if(data.userData.type == 'room'){
 				channelID = data.userData.roomId;
 			}
-			var gameData = {
-				'status': false,
-				'keyword': '',
-				'replayData': ''
-			}
-			users.addUser(socket.id, data.userData.userId, data.userProfile, data.userData.type, channelID, gameData);
+			
+			users.addUser(socket.id, data.userData.userId, data.userProfile, data.userData.type, channelID, []);
 			users.removeUser(socket.id);
 			socket.join(channelID);
 			/* var userData = {
@@ -111,8 +107,14 @@ io.on('connection', function (socket) {
 		socket.broadcast.emit('debug', data);
 	});
 
-	socket.on('submitData', (data, callback) => {
+	socket.on('submitData', (drawKeyword, data, callback) => {
 		console.log(`Receiving submitData Command via Data: ${data}`);
+		var gameData = {
+			'status': true,
+			'keyword': drawKeyword,
+			'replayData': data
+		}
+		users.saveGame(socket.id, gameData);
 		socket.broadcast.emit('debug', data);
 		callback('Received Replay Data.');
 	});

@@ -3,7 +3,13 @@
     name: 'Andrew',
     room: 'The Office Fans'
   }]
-  
+  /* var userData = {
+				'userId': data.userData.userId,
+				'profile': data.userProfile,
+				'type': data.userData.type,
+				'channelId': channelID,
+				'gameData': gameData
+			} */
   // addUser(id, name, room)
   // removeUser(id)
   // getUser(id)
@@ -35,6 +41,13 @@
       var namesArray = users.map((user) => user.name);
   
       return namesArray;
+    }
+    saveGame(id, gameData){
+      var user = this.getUser(id);
+      if(user){
+        this.users[id].gameData.push(gameData);
+      }
+      return user;
     }
   }
   

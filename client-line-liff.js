@@ -35,21 +35,24 @@ function initializeApp(data) {
             'userProfile': profile
         };
 
-        socket.emit('debug', userData);
+        //socket.emit('debug', userData);
+        socket.emit('lineRegister', userData, function (msg){
+            alert(msg);
+        });
     }).catch(function (error) {
         window.alert("Error getting profile: " + error);
     });
 
-    document.getElementById('submit-line-data').addEventListener('click', function () {
+    /* document.getElementById('submit-line-data').addEventListener('click', function () {
         
         socket.emit('lineRegister', userData, function (msg){
             alert(msg);
         });
-    });
-
+    }); */
+    
     document.getElementById('submit-drawing-data').addEventListener('click', function () {
-        
-        socket.emit('submitData', replayData, function (msg){
+        var drawKeyword =  document.getElementById('drawKeyword').value;
+        socket.emit('submitData', drawKeyword, replayData, function (msg){
             replayData = [];
             alert(msg);
         });
