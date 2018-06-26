@@ -29,7 +29,7 @@
       this.pictureUrl = data.userProfile.pictureUrl;
       this.gameData = [];
       this.channelId = this.getChannelID();
-      var getUser = this.getUser(this.lineUserID,this.channelType,this.channelId);
+      var getUser = this.getUser();
       console.log(getUser);
       if(!getUser){
         return this.addUser();
