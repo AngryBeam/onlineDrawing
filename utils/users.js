@@ -52,6 +52,9 @@
       }
       return user;
     } */
+    getUserId () {
+      return this.userId;
+    }
     getUser () {
       return this.users.filter((user) => user.userId === this.userId && user.channelType === this.channelType && user.channelId === this.channelId)[0]
     }
