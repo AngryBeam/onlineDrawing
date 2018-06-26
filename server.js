@@ -60,10 +60,12 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('debug', function (data){
+		console.log('Received command Debug');
 		socket.broadcast.emit('debug', users.getUserAll());
 	});
 
 	socket.on('submitData', (data, drawKeyword, replayData, callback) => {
+		console.log(`Received command submitData with: ${data}`);
 		if(isLine(data)){
 			var gameData = {
 				'status': true,
@@ -77,6 +79,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('requestUserList', (data) => {
+		console.log(`Received command requestUserList with: ${data}`);
 		if(isLine(data)){
 			console.log(`Received command requestUserList.`);
 			
