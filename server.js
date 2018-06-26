@@ -75,6 +75,8 @@ io.on('connection', function (socket) {
 			users.saveGame(gameData);
 			socket.broadcast.emit('debug', gameData);
 			callback('Received Replay Data.');
+		}else{
+			console.log('submitData: Not Line User');
 		}
 	});
 
@@ -89,6 +91,8 @@ io.on('connection', function (socket) {
 			console.log(user);
 			//var userList = users.getUserList(user.type, user.channelID);
 			//socket.broadcast.emit('debug', userList);
+		}else{
+			console.log('requestUserList: Not Line User');
 		}
 	});
 });
