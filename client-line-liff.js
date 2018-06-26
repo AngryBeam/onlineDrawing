@@ -146,13 +146,6 @@ function initializeApp(data) {
         // Emit the event to the server
         if ($.now() - lastEmit > 30)
         {
-            /* socket.emit('mousemove', {
-                'x': e.pageX,
-                'y': e.pageY,
-                'touch': false,
-                'drawing': drawing,
-                'id': id          
-            }); */
             replayData.push({
                 'x': e.pageX,
                 'y': e.pageY,

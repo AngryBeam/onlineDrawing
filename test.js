@@ -43,26 +43,33 @@
     console.log(namesArray);
 
  */
+var data = { userData: 
+                  { userId: 'U396611722b9956cff3f267ae06afcdea',
+                    type: 'room',
+                    roomId: 'R308e80a22b235702fcd72be8482d65c0',
+                    viewType: 'full' },
+                userProfile: 
+                  { userId: 'U396611722b9956cff3f267ae06afcdea',
+                    displayName: 'Beam',
+                    pictureUrl: 'https://profile.line-scdn.net/0m0e4f03f77251aa21bd3fbf26b24c31f47b2bad4e6c0f',
+                    statusMessage: '( ￣(エ)￣)' },
+                gameData: '' 
+            }
+var data2 = { userData: 
+              { userId: 'A396611722b9956cff3f267ae06afcdea',
+                type: 'room',
+                roomId: 'R308e80a22b235702fcd72be8482d65c0',
+                viewType: 'full' },
+            userProfile: 
+              { userId: 'A396611722b9956cff3f267ae06afcdea',
+                displayName: 'Beam2',
+                pictureUrl: 'https://profile.line-scdn.net/0m0e4f03f77251aa21bd3fbf26b24c31f47b2bad4e6c0f',
+                statusMessage: '( ￣(エ)￣)' },
+            gameData: '' 
+        }
+const {Users} = require('./utils/users');
+var users = new Users();
+users.make(data);
+users.make(data2);
 
-var temp = [{
-    id: '/#12poiajdspfoif',
-    name: 'Andrew',
-    room: 'The Office ans'
-  },{
-    id: '123',
-    name: 'Andrew',
-    room: 'The  Fans'
-  },{
-    id: '456',
-    name: 'Andrew',
-    room: 'The Office Fans'
-  },{
-    id: '789',
-    name: 'Andrew',
-    room: 'The Office Fans'
-  }];
-
-    var abc = temp.filter((user) => user.room === 'The Office Fans');
-    console.log(abc);
-    var namesArray = abc.map((user) => user.name);
-    console.log(namesArray);
+console.log(users.getUserIndex());

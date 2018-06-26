@@ -16,46 +16,76 @@
   // getUserList(room)
   
   class Users {
+    
     constructor () {
       this.users = [];
     }
-    addUser (userId,profile,type,channelId,gameData) {
-      var user = {userId,profile,type,channelId,gameData};
+
+    make(data){
+      this.data = data;
+      this.userId = data.userData.userId;
+      this.channelType = data.userData.type;
+      this.displayName = data.userProfile.displayName;
+      this.pictureUrl = data.userProfile.pictureUrl;
+      this.gameData = [];
+      this.channelId = this.getChannelID();
+      if(!this.getUser(this.lineUserID,this.channelType,this.channelId)){
+        return this.addUser();
+      }
+    }
+
+    addUser () {
+      var user = { 'userId': this.userId,
+                  'displayName': this.displayName,
+                  'pictureUrl': this.pictureUrl,
+                  'channelType': this.channelType,
+                  'channelId': this.channelId,
+                  'gameData': this.gameData
+                };
       this.users.push(user);
       return user;
     }
-    removeUser (userId,type,channelId) {
+    /* removeUser (userId,type,channelId) {
       var user = this.getUser(userId,type,channelId);
-  
       if (user) {
         this.users = this.users.filter((user) => user.userId !== userId && user.type !== type && user.channelId !== channelId);
       }
-  
       return user;
+    } */
+    getUser () {
+      return this.users.filter((user) => user.userId === this.userId && user.channelType === this.channelType && user.channelId === this.channelId)[0]
     }
-    getUser (userId,type,channelId) {
-      return this.users.filter((user) => user.userId === userId && user.type === type && user.channelId === channelId)[0]
-    }
-    getUserList (type, channelId) {
-      var users = this.users.filter((user) => user.type === type && user.channelId === channelId);
-      var namesArray = users.map((user) => user.profile);
+    getUserList () {
+      var users = this.users.filter((user) => user.channelType === this.channelType && user.channelId === this.channelId);
+      console.log(users);
+      var namesArray = users.map((user) => user.displayName);
   
       return namesArray;
     }
-    getUserIndex (userId,type,channelId) {
-      return this.users.find((user, index) => {
-        if(user.userId === userId && user.type === type && user.channelId === channelId){
-          return index;
-        }
-      })
+    getUserIndex () {
+      return this.users.findIndex((user) => 
+        user.userId === this.userId && user.channelType === this.channelType && user.channelId === this.channelId
+      )
     }
-
-    saveGame(userId,type,channelId,gameData){
-      var index = this.getUserIndex(userId,type,channelId);
+    getUserAll () {
+      return this.users;
+    }
+    saveGame(gameData){
+      var index = this.getUserIndex();
       if(index){
         this.users[index].gameData.push(gameData);
       }
       return user;
+    }
+
+    getChannelID(){
+      if (this.data.userData.type == 'utou'){
+        return this.data.userData.utouId;
+      }else if(this.data.userData.type == 'group'){
+        return this.data.userData.groupId;
+      }else if(this.data.userData.type == 'room'){
+        return this.data.userData.roomId;
+      }
     }
   }
   
