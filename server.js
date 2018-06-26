@@ -116,19 +116,20 @@ io.on('connection', function (socket) {
 		socket.broadcast.emit('debug', users);
 	});
 
-	socket.on('submitData', (drawKeyword, data, callback) => {
+	socket.on('submitData', (data, drawKeyword, replayData, callback) => {
 		//console.log(`Receiving submitData Command via Data: ${data}`);
+		var channelID = getChannelID(data);
 		var gameData = {
 			'status': true,
 			'keyword': drawKeyword,
-			'replayData': data
+			'replayData': replayData
 		}
-		users.saveGame(socket.id, gameData);
+		users.saveGame(data.userData.userId, data.userData.type, channelID, gameData);
 		socket.broadcast.emit('debug', gameData);
 		callback('Received Replay Data.');
 	});
 
-	socket.on('requestUserList', function (data){
+	socket.on('requestUserList', (data) => {
 		console.log(`Received command requestUserList with ${data}`);
 		var channelID = getChannelID(data);
 		var user = users.getUser(data.userData.userId, data.userData.type, channelID);

@@ -45,7 +45,7 @@ function initializeApp(data) {
     
     document.getElementById('submit-drawing-data').addEventListener('click', function () {
         var drawKeyword =  document.getElementById('drawKeyword').value;
-        socket.emit('submitData', drawKeyword, replayData, function (msg){
+        socket.emit('submitData', userData, drawKeyword, replayData, function (msg){
             replayData = [];
             alert(msg);
         });

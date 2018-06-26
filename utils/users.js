@@ -42,10 +42,18 @@
   
       return namesArray;
     }
-    saveGame(gameData){
-      var user = this.getUser(id);
-      if(user){
-        this.users[id].gameData.push(gameData);
+    getUserIndex (userId,type,channelId) {
+      return this.users.find((user, index) => {
+        if(user.userId === userId && user.type === type && user.channelId === channelId){
+          return index;
+        }
+      })
+    }
+
+    saveGame(userId,type,channelId,gameData){
+      var index = this.getUserIndex(userId,type,channelId);
+      if(index){
+        this.users[index].gameData.push(gameData);
       }
       return user;
     }
