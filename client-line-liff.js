@@ -106,6 +106,10 @@ function initializeApp(data) {
         e.preventDefault;
         socket.emit('debug', true);
     });
+    $('#getUserList').click(function (e){
+        e.preventDefault;
+        socket.emit('requestUserList', true);
+    });
 
 
     // Drawing helper function

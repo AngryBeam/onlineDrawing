@@ -104,7 +104,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('debug', function (data){
-		socket.broadcast.emit('debug', data);
+		socket.broadcast.emit('debug', users);
 	});
 
 	socket.on('submitData', (drawKeyword, data, callback) => {
@@ -117,6 +117,12 @@ io.on('connection', function (socket) {
 		users.saveGame(socket.id, gameData);
 		socket.broadcast.emit('debug', gameData);
 		callback('Received Replay Data.');
+	});
+
+	socket.on('requestUserList', function (data){
+		var user = users.getUser(socket.id);
+		var userList = users.getUserList(user.type, user.channelID);
+		socket.broadcast.emit('debug', userList);
 	});
 });
 

@@ -36,9 +36,9 @@
     getUser (id) {
       return this.users.filter((user) => user.id === id)[0]
     }
-    getUserList (room) {
-      var users = this.users.filter((user) => user.room === room);
-      var namesArray = users.map((user) => user.name);
+    getUserList (type, channelId) {
+      var users = this.users.filter((user) => user.type === type && user.channelId === channelId);
+      var namesArray = users.map((user) => user.profile);
   
       return namesArray;
     }
