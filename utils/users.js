@@ -31,7 +31,7 @@
       this.channelId = this.getChannelID();
       var getUser = this.getUser();
       console.log(getUser);
-      if(!getUser){
+      if(getUser === undefined){
         return this.addUser();
       }
     }

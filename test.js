@@ -69,7 +69,7 @@ var data2 = { userData:
         }
 const {Users} = require('./utils/users');
 var users = new Users();
-users.make(data);
-users.make(data2);
+//users.make(data);
+//users.make(data2);
 
-console.log(users.getUserIndex());
+console.log(users.getUser());
